@@ -1,5 +1,6 @@
-spring:
-  datasource:
+spring.datasource:
     url: jdbc:postgresql://localhost:5432/sen
     username: postgres
     password:
+
+logging.level: INFO

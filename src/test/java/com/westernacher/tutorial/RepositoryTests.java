@@ -1,6 +1,5 @@
 package com.westernacher.tutorial;
 
-import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,13 +8,12 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
 
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class SqlApplicationTests {
+public class RepositoryTests {
 
     @Autowired
     private WorldRepository worldRepository;
@@ -37,6 +35,6 @@ public class SqlApplicationTests {
         final Language pashto = allLanguages.get(0);
         assertThat(pashto.getCountrycode(), is("AFG"));
         assertThat(pashto.getLanguage(), is("Pashto"));
-        assertThat(pashto.getPercentage(), Matchers.closeTo(52.4, 1e-5));
+        assertThat(pashto.getPercentage(), closeTo(52.4, 1e-5));
     }
 }

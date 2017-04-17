@@ -3,6 +3,7 @@ package com.westernacher.tutorial;
 public class Country {
     private String code;
     private String name;
+    private long population;
 
     public String getCode() {
         return code;
@@ -20,11 +21,20 @@ public class Country {
         this.name = name;
     }
 
+    public long getPopulation() {
+        return population;
+    }
+
+    public void setPopulation(long population) {
+        this.population = population;
+    }
+
     @Override
     public String toString() {
         return "Country{" +
                 "code='" + code + '\'' +
                 ", name='" + name + '\'' +
+                ", population=" + population +
                 '}';
     }
 }

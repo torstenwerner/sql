@@ -71,4 +71,12 @@ public class Solutions {
                 ))
                 .forEach((language, speakers) -> System.out.printf("%30s %12d\n", language, Math.round(speakers)));
     }
+
+    @Test
+    public void worldPopulation() throws Exception {
+        final long worldPopulation = worldRepository.findAllCountries().stream()
+                .mapToLong(Country::getPopulation)
+                .sum();
+        System.out.println(worldPopulation);
+    }
 }

@@ -1,5 +1,6 @@
 package com.westernacher.tutorial;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,7 +8,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toMap;
 
@@ -17,6 +20,13 @@ public class Solutions {
 
     @Autowired
     private WorldRepository worldRepository;
+    private Map<String, Country> countries;
+
+    @Before
+    public void setUp() throws Exception {
+        countries = worldRepository.findAllCountries().stream()
+                .collect(toMap(Country::getCode, Function.identity()));
+    }
 
     @Test
     public void hundredPercent() throws Exception {
@@ -27,8 +37,6 @@ public class Solutions {
 
     @Test
     public void speakersPerCountry() throws Exception {
-        final Map<String, Country> countries = worldRepository.findAllCountries().stream()
-                .collect(toMap(Country::getCode, Function.identity()));
 
         class ResultRow {
             String name;
@@ -50,5 +58,17 @@ public class Solutions {
         worldRepository.findAllLanguages().stream()
                 .map(language -> new ResultRow(language))
                 .forEach(ResultRow::print);
+    }
+
+    @Test
+    public void speakersInWorld() throws Exception {
+        worldRepository.findAllLanguages().stream()
+                .collect(Collectors.toMap(
+                        Language::getLanguage,
+                        language -> language.getPercentage() * countries.get(language.getCountrycode()).getPopulation(),
+                        (sum, value) -> sum + value,
+                        TreeMap::new
+                ))
+                .forEach((language, speakers) -> System.out.printf("%30s %12d\n", language, Math.round(speakers)));
     }
 }

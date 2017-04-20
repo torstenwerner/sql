@@ -26,6 +26,25 @@ ORDER BY speakers DESC;
 SELECT sum(population)
 FROM country;
 
+-- calculate world population, average and median population of all countries, europe's population
+SELECT
+  sum(population) AS sum,
+  round(avg(population)) as average,
+  percentile_cont(0.5) WITHIN GROUP (ORDER BY population) as median,
+  sum(population) FILTER (WHERE continent = 'Europe') as europe
+FROM country;
+
+-- convert first 10 countries to a JSON array of country objects
+SELECT json_agg(c) FROM country c LIMIT 10;
+
+-- first 10 countries as JSON with 2 fields: country name and languages which is an array of json objects
+SELECT json_agg(cs) FROM
+  (SELECT c.name, (
+    SELECT json_agg(cl.*) FROM countrylanguage cl WHERE cl.countrycode = c.code
+  ) AS languages
+   FROM country c) cs
+LIMIT 10;
+
 -- calculate the percentage of each language in the world; format percentage like 0.123456; sort by percentage descending
 SELECT
   to_char(sum(c.population * cl.percentage) / 100 / (SELECT sum(population)

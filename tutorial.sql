@@ -34,6 +34,11 @@ SELECT
   sum(population) FILTER (WHERE continent = 'Europe') as europe
 FROM country;
 
+-- calculate number of cities per country, sort by city count descending
+SELECT co.name, (SELECT count(*) FROM city ci WHERE ci.countrycode = co.code) AS citycount
+  FROM country co
+  ORDER BY citycount DESC;
+
 -- convert first 10 countries to a JSON array of country objects
 SELECT json_agg(c) FROM country c LIMIT 10;
 

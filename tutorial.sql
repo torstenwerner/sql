@@ -28,25 +28,38 @@ FROM country;
 
 -- calculate world population, average and median population of all countries, europe's population
 SELECT
-  sum(population) AS sum,
-  round(avg(population)) as average,
-  percentile_cont(0.5) WITHIN GROUP (ORDER BY population) as median,
-  sum(population) FILTER (WHERE continent = 'Europe') as europe
+  sum(population)                       AS sum,
+  round(avg(population))                AS average,
+  percentile_cont(0.5)
+  WITHIN GROUP (ORDER BY population)    AS median,
+  sum(population)
+    FILTER (WHERE continent = 'Europe') AS europe
 FROM country;
 
 -- calculate number of cities per country, sort by city count descending
-SELECT co.name, (SELECT count(*) FROM city ci WHERE ci.countrycode = co.code) AS citycount
-  FROM country co
-  ORDER BY citycount DESC;
+SELECT
+  co.name,
+  (SELECT count(*)
+   FROM city ci
+   WHERE ci.countrycode = co.code) AS citycount
+FROM country co
+ORDER BY citycount DESC;
 
 -- convert first 10 countries to a JSON array of country objects
-SELECT json_agg(c) FROM country c LIMIT 10;
+SELECT json_agg(c)
+FROM country c
+LIMIT 10;
 
 -- first 10 countries as JSON with 2 fields: country name and languages which is an array of json objects
-SELECT json_agg(cs) FROM
-  (SELECT c.name, (
-    SELECT json_agg(cl.*) FROM countrylanguage cl WHERE cl.countrycode = c.code
-  ) AS languages
+SELECT json_agg(cs)
+FROM
+  (SELECT
+     c.name,
+     (
+       SELECT json_agg(cl.*)
+       FROM countrylanguage cl
+       WHERE cl.countrycode = c.code
+     ) AS languages
    FROM country c) cs
 LIMIT 10;
 
@@ -129,4 +142,37 @@ FROM (
          FROM country c
            JOIN countrylanguage cl ON c.code = cl.countrycode) AS lr
     ON cr.code = lr.code
+ORDER BY cr.rank, lr.rank;
+
+-- as above but limited to max 3 languages per country
+SELECT
+  cr.name,
+  cr.rank AS poprank,
+  cr.population,
+  lr.language,
+  lr.rank AS langrank,
+  lr.percentage
+FROM (
+       SELECT
+         code,
+         name,
+         row_number()
+         OVER (
+           ORDER BY population DESC ) AS rank,
+         population
+       FROM country
+     ) AS cr
+  JOIN (
+         SELECT
+           c.code,
+           cl.language,
+           row_number()
+           OVER (
+             PARTITION BY countrycode
+             ORDER BY percentage DESC ) AS rank,
+           cl.percentage
+         FROM country c
+           JOIN countrylanguage cl ON c.code = cl.countrycode) AS lr
+    ON cr.code = lr.code
+WHERE lr.rank < 4
 ORDER BY cr.rank, lr.rank;

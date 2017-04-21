@@ -26,14 +26,23 @@ ORDER BY speakers DESC;
 SELECT sum(population)
 FROM country;
 
--- calculate world population, average and median population of all countries, europe's population
+-- calculate world population, average, max and median population of all countries, europe's population, population of all
+-- countries below median
+WITH median AS
+(SELECT percentile_cont(0.5)
+        WITHIN GROUP (ORDER BY population)
+ FROM country)
 SELECT
-  sum(population)                       AS sum,
-  round(avg(population))                AS average,
+  sum(population)                             AS sum,
+  round(avg(population))                      AS average,
+  max(population),
   percentile_cont(0.5)
-  WITHIN GROUP (ORDER BY population)    AS median,
+  WITHIN GROUP (ORDER BY population)          AS median,
   sum(population)
-    FILTER (WHERE continent = 'Europe') AS europe
+    FILTER (WHERE continent = 'Europe')       AS europe,
+  sum(population)
+    FILTER (WHERE population < (SELECT *
+                                FROM median)) AS belowmedian
 FROM country;
 
 -- calculate number of cities per country, sort by city count descending

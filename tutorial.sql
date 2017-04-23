@@ -26,11 +26,19 @@ ORDER BY speakers DESC;
 SELECT sum(population)
 FROM country;
 
+-- list all country names that have not official languages
+SELECT co.name
+FROM country co
+WHERE exists(SELECT 1
+             FROM countrylanguage cl
+             WHERE cl.countrycode = co.code AND NOT cl.isofficial)
+ORDER BY co.code;
+
 -- calculate world population, average, max and median population of all countries, europe's population, population of all
 -- countries below median
 WITH median AS
 (SELECT percentile_cont(0.5)
-        WITHIN GROUP (ORDER BY population)
+    WITHIN GROUP (ORDER BY population)
  FROM country)
 SELECT
   sum(population)                             AS sum,

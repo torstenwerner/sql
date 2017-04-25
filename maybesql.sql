@@ -32,7 +32,7 @@ WHERE a0.userid IN (
                    WHERE a2.userid = a1.userid AND a2.key = 'sn' AND a2.value ILIKE '%Muster%'
                          AND exists(SELECT 1
                                     FROM attribute a3
-                                    WHERE a3.userid = a1.userid AND a3.key = 'givenName' AND a3.value ILIKE '%a%'))
+                                    WHERE a3.userid = a1.userid AND a3.key = 'givenName' AND a3.value ILIKE '%Hans%'))
   OFFSET 0
   LIMIT 2);
 

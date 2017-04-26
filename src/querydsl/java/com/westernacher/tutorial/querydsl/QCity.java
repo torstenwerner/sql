@@ -1,26 +1,24 @@
 package com.westernacher.tutorial.querydsl;
 
-import static com.querydsl.core.types.PathMetadataFactory.*;
-
-import com.querydsl.core.types.dsl.*;
-
-import com.querydsl.core.types.PathMetadata;
-import javax.annotation.Generated;
 import com.querydsl.core.types.Path;
-
+import com.querydsl.core.types.PathMetadata;
+import com.querydsl.core.types.dsl.NumberPath;
+import com.querydsl.core.types.dsl.StringPath;
 import com.querydsl.sql.ColumnMetadata;
+
+import javax.annotation.Generated;
 import java.sql.Types;
 
-
+import static com.querydsl.core.types.PathMetadataFactory.forVariable;
 
 
 /**
- * QCity is a Querydsl query type for QCity
+ * QCity is a Querydsl query type for City
  */
 @Generated("com.querydsl.sql.codegen.MetaDataSerializer")
-public class QCity extends com.querydsl.sql.RelationalPathBase<QCity> {
+public class QCity extends com.querydsl.sql.RelationalPathBase<City> {
 
-    private static final long serialVersionUID = 1029147059;
+    private static final long serialVersionUID = 1833933396;
 
     public static final QCity city = new QCity("city");
 
@@ -34,32 +32,32 @@ public class QCity extends com.querydsl.sql.RelationalPathBase<QCity> {
 
     public final NumberPath<Integer> population = createNumber("population", Integer.class);
 
-    public final com.querydsl.sql.PrimaryKey<QCity> cityPkey = createPrimaryKey(id);
+    public final com.querydsl.sql.PrimaryKey<City> cityPkey = createPrimaryKey(id);
 
-    public final com.querydsl.sql.ForeignKey<QCountry> _countryCapitalFkey = createInvForeignKey(id, "capital");
+    public final com.querydsl.sql.ForeignKey<Country> _countryCapitalFkey = createInvForeignKey(id, "capital");
 
     public QCity(String variable) {
-        super(QCity.class, forVariable(variable), "public", "city");
+        super(City.class, forVariable(variable), "public", "city");
         addMetadata();
     }
 
     public QCity(String variable, String schema, String table) {
-        super(QCity.class, forVariable(variable), schema, table);
+        super(City.class, forVariable(variable), schema, table);
         addMetadata();
     }
 
     public QCity(String variable, String schema) {
-        super(QCity.class, forVariable(variable), schema, "city");
+        super(City.class, forVariable(variable), schema, "city");
         addMetadata();
     }
 
-    public QCity(Path<? extends QCity> path) {
+    public QCity(Path<? extends City> path) {
         super(path.getType(), path.getMetadata(), "public", "city");
         addMetadata();
     }
 
     public QCity(PathMetadata metadata) {
-        super(QCity.class, metadata, "public", "city");
+        super(City.class, metadata, "public", "city");
         addMetadata();
     }
 

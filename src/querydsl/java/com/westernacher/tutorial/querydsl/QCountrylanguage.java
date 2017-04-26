@@ -1,26 +1,25 @@
 package com.westernacher.tutorial.querydsl;
 
-import static com.querydsl.core.types.PathMetadataFactory.*;
-
-import com.querydsl.core.types.dsl.*;
-
-import com.querydsl.core.types.PathMetadata;
-import javax.annotation.Generated;
 import com.querydsl.core.types.Path;
-
+import com.querydsl.core.types.PathMetadata;
+import com.querydsl.core.types.dsl.BooleanPath;
+import com.querydsl.core.types.dsl.NumberPath;
+import com.querydsl.core.types.dsl.StringPath;
 import com.querydsl.sql.ColumnMetadata;
+
+import javax.annotation.Generated;
 import java.sql.Types;
 
-
+import static com.querydsl.core.types.PathMetadataFactory.forVariable;
 
 
 /**
- * QCountrylanguage is a Querydsl query type for QCountrylanguage
+ * QCountrylanguage is a Querydsl query type for Countrylanguage
  */
 @Generated("com.querydsl.sql.codegen.MetaDataSerializer")
-public class QCountrylanguage extends com.querydsl.sql.RelationalPathBase<QCountrylanguage> {
+public class QCountrylanguage extends com.querydsl.sql.RelationalPathBase<Countrylanguage> {
 
-    private static final long serialVersionUID = 580093862;
+    private static final long serialVersionUID = -1196787611;
 
     public static final QCountrylanguage countrylanguage = new QCountrylanguage("countrylanguage");
 
@@ -32,32 +31,32 @@ public class QCountrylanguage extends com.querydsl.sql.RelationalPathBase<QCount
 
     public final NumberPath<Float> percentage = createNumber("percentage", Float.class);
 
-    public final com.querydsl.sql.PrimaryKey<QCountrylanguage> countrylanguagePkey = createPrimaryKey(countrycode, language);
+    public final com.querydsl.sql.PrimaryKey<Countrylanguage> countrylanguagePkey = createPrimaryKey(countrycode, language);
 
-    public final com.querydsl.sql.ForeignKey<QCountry> countrylanguageCountrycodeFkey = createForeignKey(countrycode, "code");
+    public final com.querydsl.sql.ForeignKey<Country> countrylanguageCountrycodeFkey = createForeignKey(countrycode, "code");
 
     public QCountrylanguage(String variable) {
-        super(QCountrylanguage.class, forVariable(variable), "public", "countrylanguage");
+        super(Countrylanguage.class, forVariable(variable), "public", "countrylanguage");
         addMetadata();
     }
 
     public QCountrylanguage(String variable, String schema, String table) {
-        super(QCountrylanguage.class, forVariable(variable), schema, table);
+        super(Countrylanguage.class, forVariable(variable), schema, table);
         addMetadata();
     }
 
     public QCountrylanguage(String variable, String schema) {
-        super(QCountrylanguage.class, forVariable(variable), schema, "countrylanguage");
+        super(Countrylanguage.class, forVariable(variable), schema, "countrylanguage");
         addMetadata();
     }
 
-    public QCountrylanguage(Path<? extends QCountrylanguage> path) {
+    public QCountrylanguage(Path<? extends Countrylanguage> path) {
         super(path.getType(), path.getMetadata(), "public", "countrylanguage");
         addMetadata();
     }
 
     public QCountrylanguage(PathMetadata metadata) {
-        super(QCountrylanguage.class, metadata, "public", "countrylanguage");
+        super(Countrylanguage.class, metadata, "public", "countrylanguage");
         addMetadata();
     }
 

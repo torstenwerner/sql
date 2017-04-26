@@ -1,26 +1,23 @@
 package com.westernacher.tutorial.querydsl;
 
-import static com.querydsl.core.types.PathMetadataFactory.*;
-
-import com.querydsl.core.types.dsl.*;
-
-import com.querydsl.core.types.PathMetadata;
-import javax.annotation.Generated;
 import com.querydsl.core.types.Path;
-
+import com.querydsl.core.types.PathMetadata;
+import com.querydsl.core.types.dsl.StringPath;
 import com.querydsl.sql.ColumnMetadata;
+
+import javax.annotation.Generated;
 import java.sql.Types;
 
-
+import static com.querydsl.core.types.PathMetadataFactory.forVariable;
 
 
 /**
- * QAttribute is a Querydsl query type for QAttribute
+ * QAttribute is a Querydsl query type for Attribute
  */
 @Generated("com.querydsl.sql.codegen.MetaDataSerializer")
-public class QAttribute extends com.querydsl.sql.RelationalPathBase<QAttribute> {
+public class QAttribute extends com.querydsl.sql.RelationalPathBase<Attribute> {
 
-    private static final long serialVersionUID = -1030641836;
+    private static final long serialVersionUID = 769643347;
 
     public static final QAttribute attribute = new QAttribute("attribute");
 
@@ -31,27 +28,27 @@ public class QAttribute extends com.querydsl.sql.RelationalPathBase<QAttribute> 
     public final StringPath value = createString("value");
 
     public QAttribute(String variable) {
-        super(QAttribute.class, forVariable(variable), "public", "attribute");
+        super(Attribute.class, forVariable(variable), "public", "attribute");
         addMetadata();
     }
 
     public QAttribute(String variable, String schema, String table) {
-        super(QAttribute.class, forVariable(variable), schema, table);
+        super(Attribute.class, forVariable(variable), schema, table);
         addMetadata();
     }
 
     public QAttribute(String variable, String schema) {
-        super(QAttribute.class, forVariable(variable), schema, "attribute");
+        super(Attribute.class, forVariable(variable), schema, "attribute");
         addMetadata();
     }
 
-    public QAttribute(Path<? extends QAttribute> path) {
+    public QAttribute(Path<? extends Attribute> path) {
         super(path.getType(), path.getMetadata(), "public", "attribute");
         addMetadata();
     }
 
     public QAttribute(PathMetadata metadata) {
-        super(QAttribute.class, metadata, "public", "attribute");
+        super(Attribute.class, metadata, "public", "attribute");
         addMetadata();
     }
 

@@ -1,26 +1,24 @@
 package com.westernacher.tutorial.querydsl;
 
-import static com.querydsl.core.types.PathMetadataFactory.*;
-
-import com.querydsl.core.types.dsl.*;
-
-import com.querydsl.core.types.PathMetadata;
-import javax.annotation.Generated;
 import com.querydsl.core.types.Path;
-
+import com.querydsl.core.types.PathMetadata;
+import com.querydsl.core.types.dsl.NumberPath;
+import com.querydsl.core.types.dsl.StringPath;
 import com.querydsl.sql.ColumnMetadata;
+
+import javax.annotation.Generated;
 import java.sql.Types;
 
-
+import static com.querydsl.core.types.PathMetadataFactory.forVariable;
 
 
 /**
- * QCountry is a Querydsl query type for QCountry
+ * QCountry is a Querydsl query type for Country
  */
 @Generated("com.querydsl.sql.codegen.MetaDataSerializer")
-public class QCountry extends com.querydsl.sql.RelationalPathBase<QCountry> {
+public class QCountry extends com.querydsl.sql.RelationalPathBase<Country> {
 
-    private static final long serialVersionUID = 2015961678;
+    private static final long serialVersionUID = -1396686323;
 
     public static final QCountry country = new QCountry("country");
 
@@ -54,34 +52,34 @@ public class QCountry extends com.querydsl.sql.RelationalPathBase<QCountry> {
 
     public final NumberPath<Float> surfacearea = createNumber("surfacearea", Float.class);
 
-    public final com.querydsl.sql.PrimaryKey<QCountry> countryPkey = createPrimaryKey(code);
+    public final com.querydsl.sql.PrimaryKey<Country> countryPkey = createPrimaryKey(code);
 
-    public final com.querydsl.sql.ForeignKey<QCity> countryCapitalFkey = createForeignKey(capital, "id");
+    public final com.querydsl.sql.ForeignKey<City> countryCapitalFkey = createForeignKey(capital, "id");
 
-    public final com.querydsl.sql.ForeignKey<QCountrylanguage> _countrylanguageCountrycodeFkey = createInvForeignKey(code, "countrycode");
+    public final com.querydsl.sql.ForeignKey<Countrylanguage> _countrylanguageCountrycodeFkey = createInvForeignKey(code, "countrycode");
 
     public QCountry(String variable) {
-        super(QCountry.class, forVariable(variable), "public", "country");
+        super(Country.class, forVariable(variable), "public", "country");
         addMetadata();
     }
 
     public QCountry(String variable, String schema, String table) {
-        super(QCountry.class, forVariable(variable), schema, table);
+        super(Country.class, forVariable(variable), schema, table);
         addMetadata();
     }
 
     public QCountry(String variable, String schema) {
-        super(QCountry.class, forVariable(variable), schema, "country");
+        super(Country.class, forVariable(variable), schema, "country");
         addMetadata();
     }
 
-    public QCountry(Path<? extends QCountry> path) {
+    public QCountry(Path<? extends Country> path) {
         super(path.getType(), path.getMetadata(), "public", "country");
         addMetadata();
     }
 
     public QCountry(PathMetadata metadata) {
-        super(QCountry.class, metadata, "public", "country");
+        super(Country.class, metadata, "public", "country");
         addMetadata();
     }
 

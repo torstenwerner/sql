@@ -1,3 +1,4 @@
+import com.querydsl.codegen.BeanSerializer
 import com.querydsl.sql.codegen.MetaDataExporter
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.TaskAction
@@ -10,6 +11,7 @@ class QueryDslTask extends DefaultTask {
     String password = ''
     String packageName = 'com.westernacher.tutorial.querydsl'
     File destDir = project.file("${project.projectDir}/src/querydsl/java")
+    boolean enableBeanSerializer = true
 
     QueryDslTask() {
         description = 'create querydsl classes'
@@ -24,6 +26,11 @@ class QueryDslTask extends DefaultTask {
         def exporter = new MetaDataExporter()
         exporter.setPackageName(packageName)
         exporter.setTargetFolder(destDir)
+        if (enableBeanSerializer) {
+            def serializer = new BeanSerializer()
+            serializer.addToString = true
+            exporter.setBeanSerializer(serializer);
+        }
 
         exporter.export(connection.getMetaData())
     }

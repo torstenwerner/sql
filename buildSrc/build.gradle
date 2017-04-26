@@ -1,0 +1,8 @@
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'com.querydsl:querydsl-sql-codegen:4.1.4',
+            'org.postgresql:postgresql:42.0.0'
+}

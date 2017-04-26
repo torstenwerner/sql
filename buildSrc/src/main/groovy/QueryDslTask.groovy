@@ -9,7 +9,7 @@ class QueryDslTask extends DefaultTask {
     String username = 'postgres'
     String password = ''
     String packageName = 'com.westernacher.tutorial.querydsl'
-    File destDir = project.file("${project.buildDir}/querydsl")
+    File destDir = project.file("${project.projectDir}/src/querydsl/java")
 
     QueryDslTask() {
         description = 'create querydsl classes'

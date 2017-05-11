@@ -1,0 +1,52 @@
+= SQL tutorial
+
+== Preparation
+
+* install docker → https://www.docker.com/[https://www.docker.com/] → Get Docker → For Desktops
+* `docker run -d –name postgres -p 5432:5432 postgres:alpine`
+* `echo 'create database sen;' | docker run -i –rm –link postgres:postgres postgres:alpine psql -h postgres -U postgres postgres`
+* `docker run -i –rm –link postgres:postgres postgres:alpine psql -h postgres -U postgres sen &lt; world/world.sql`
+
+Stop and start without losing data:
+
+* `docker stop postgres`
+* `docker start postgres`
+
+== Checklist
+
+everybody…
+- got docker installed
+- got postgresql set up
+- got database tool configured and could execute the sample query
+- has a Java IDE
+
+== Exercises
+
+=== SQL
+
+* open the PostgreSQL documentation at https://www.postgresql.org/docs/9.6/static/index.html[https://www.postgresql.org/docs/9.6/static/index.html] and use it as needed
+* The database contains some outdated world data about cities, countries, and languages.
+
+Try to solve every task twice.
+Use whatever you need e.g. views, temporarily tables to get is solved during the first try.
+After that try to solve it again with exactly 1 but possibly complex statement without using views or temporary tables.
+
+Tasks:
+
+. Become familar with the 3 database tables. Execute some simple queries to understand the data.
+. Check for each country if the language percentages add up to 100%. The result should look like:
+|===
+|countrycode|sum
+
+|BLZ|98.8
+|BGD|98.69999
+|ITA|99.59998
+|===
+. Calculate the rounded number of speakers of each language in each country. Sample output:
+|===
+|name|speakers|language
+
+|Afghanistan|11905280|Pashto
+|Netherlands|15165984|Dutch
+|Netherlands Antilles|187054|Papiamento
+|===

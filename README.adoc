@@ -19,6 +19,7 @@ everybody…
 - got postgresql set up
 - got database tool configured and could execute the sample query
 - has a Java IDE
+- has opened the progress spreadsheet
 
 == Exercises
 
@@ -34,19 +35,89 @@ After that try to solve it again with exactly 1 but possibly complex statement w
 Tasks:
 
 . Become familar with the 3 database tables. Execute some simple queries to understand the data.
+
 . Check for each country if the language percentages add up to 100%. The result should look like:
++
+[%autowidth,cols="<,>",options="header"]
 |===
-|countrycode|sum
+^|countrycode
+^|sum
 
 |BLZ|98.8
 |BGD|98.69999
 |ITA|99.59998
 |===
+
 . Calculate the rounded number of speakers of each language in each country. Sample output:
++
+[%autowidth,cols="<,>,<",options="header"]
 |===
-|name|speakers|language
+^|name
+^|speakers
+^|language
 
 |Afghanistan|11905280|Pashto
 |Netherlands|15165984|Dutch
 |Netherlands Antilles|187054|Papiamento
+|===
+
+. Calculate the rounded number of speakers of each language in the world. Sort them by speakers descending.
++
+[%autowidth,cols=">,<",options="header"]
+|===
+^|speakers
+^|language
+
+|1191843539|Chinese
+|405633085|Hindi
+|355029462|Spanish
+|===
+
+. Calculate the world population.
++
+[%autowidth,cols="<",options="header"]
+|===
+^|sum
+
+|6078749450
+|===
+
+. List all country names that have no official languages.
++
+[%autowidth,cols="<",options="header"]
+|===
+^|name
+
+|Aruba
+|Afghanistan
+|Angola
+|===
+
+. Calculate world population, average, max and median population of all countries, europe's population, population of all countries below median.
++
+[%autowidth,cols="<,<,<,<,<,<",options="header"]
+|===
+^|sum|average|max|median|europe|belowmedian
+
+|6078749450|25434098|1277558000|3869000|730074600|101437250
+|===
+
+. Calculate number of cities per country, sort by city count descending.
++
+[%autowidth,cols="<,>",options="header"]
+|===
+^|name|citycount
+
+|China|363
+|India|341
+|United States|274
+|===
+
+. Convert the first 10 countries to a JSON array of country objects.
++
+[%autowidth,cols="<",options="header"]
+|===
+^|json
+
+|[{"code":"AFG","name":"Afghanistan"...}, ..., {"code":"ATG","name":"Antigua and Barbuda",...}]
 |===

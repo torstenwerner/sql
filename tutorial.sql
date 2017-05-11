@@ -63,9 +63,10 @@ FROM country co
 ORDER BY citycount DESC;
 
 -- convert first 10 countries to a JSON array of country objects
-SELECT json_agg(c)
-FROM country c
-LIMIT 10;
+SELECT json_agg(c) AS json
+FROM (SELECT *
+      FROM country
+      LIMIT 10) c;
 
 -- first 10 countries as JSON with 2 fields: country name and languages which is an array of json objects
 SELECT json_agg(cs)

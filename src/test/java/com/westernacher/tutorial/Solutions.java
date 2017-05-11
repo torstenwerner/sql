@@ -7,14 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import static java.lang.Boolean.FALSE;
 import static java.util.stream.Collectors.toMap;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
@@ -55,7 +53,7 @@ public class Solutions {
                 is("                             Afghanistan 1190528034                         Pashto\n"));
     }
 
-    public void speakersPerCountry(Consumer<String> consumer) throws Exception {
+    private void speakersPerCountry(Consumer<String> consumer) throws Exception {
 
         class ResultRow {
             String name;
@@ -99,5 +97,17 @@ public class Solutions {
                 .mapToLong(Country::getPopulation)
                 .sum();
         System.out.println(worldPopulation);
+    }
+
+    @Test
+    public void countriesNoOfficialLanguages() throws Exception {
+        worldRepository.findAllLanguages().stream()
+                .filter(language -> FALSE.equals(language.getIsofficial()))
+                .map(Language::getCountrycode)
+                .sorted()
+                .distinct()
+                .map(countries::get)
+                .map(Country::getName)
+                .forEach(name -> System.out.printf("%s\n", name));
     }
 }

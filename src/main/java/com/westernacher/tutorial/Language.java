@@ -3,6 +3,7 @@ package com.westernacher.tutorial;
 public class Language {
     private String countrycode;
     private String language;
+    private Boolean isofficial;
     private double percentage;
 
     public String getCountrycode() {
@@ -11,6 +12,14 @@ public class Language {
 
     public void setCountrycode(String countrycode) {
         this.countrycode = countrycode;
+    }
+
+    public Boolean getIsofficial() {
+        return isofficial;
+    }
+
+    public void setIsofficial(Boolean isofficial) {
+        this.isofficial = isofficial;
     }
 
     public String getLanguage() {

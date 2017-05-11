@@ -12,6 +12,6 @@ public interface WorldRepository {
     @Select("SELECT code, name, population FROM country")
     List<Country> findAllCountries();
 
-    @Select("SELECT countrycode, language, percentage FROM countrylanguage")
+    @Select("SELECT countrycode, language, isofficial, percentage FROM countrylanguage")
     List<Language> findAllLanguages();
 }

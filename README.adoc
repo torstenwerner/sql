@@ -121,3 +121,95 @@ Tasks:
 
 |[{"code":"AFG","name":"Afghanistan"...}, ..., {"code":"ATG","name":"Antigua and Barbuda",...}]
 |===
+
+. Aggregate first 2 countries to JSON where each country has 2 fields: country name and languages which is an array of JSON objects.
++
+[%autowidth,cols="<",options="header"]
+|===
+^|json
+
+|[{"name":"Afghanistan","languages":[{"countrycode":"AFG","language":"Pashto",...},{"countrycode":"AFG","language":"Dari",...},...]},...]
+|===
+
+. Calculate the percentage of each language in the world, format percentage like 0.123456, sort by percentage descending.
++
+[%autowidth,cols=">,<",options="header"]
+|===
+^|percentage
+^|language
+
+|0.196067|Chinese
+|0.066730|Hindi
+|0.058405|Spanish
+|===
+
+. Same task as above with an additional rank column.
++
+[%autowidth,cols=">,>,<",options="header"]
+|===
+^|rank
+^|percentage
+^|language
+
+|1|0.196067|Chinese
+|2|0.066730|Hindi
+|3|0.058405|Spanish
+|===
+
+. Sort countries by population descending and add a rank column.
++
+[%autowidth,cols="<,<,>,>",options="header"]
+|===
+^|code
+^|name
+^|rank
+^|population
+
+|CHN|China|1|1277558000
+|IND|India|2|1013662000
+|USA|United States|3|278357000
+|===
+
+. Calculate rank of language in each country sorted by percentage descending.
++
+[%autowidth,cols="<,<,>,>",options="header"]
+|===
+^|code
+^|language
+^|rank
+^|percentage
+
+|ABW|Papiamento|1|76.7
+|ABW|English|2|9.5
+|ABW|Spanish|3|7.4
+|ABW|Dutch|4|5.3
+|AFG|Pashto|1|52.4
+|AFG|Dari|2|32.1
+|===
+
+. Combine the tasks above. Sort countries by population descending first and language rank descending second.
++
+[%autowidth,cols="<,>,>,<,>,>",options="header"]
+|===
+^|name
+^|poprank
+^|population
+^|language
+^|langrank
+^|percentage
+
+|China|1|1277558000|Chinese|1|92
+|China|1|1277558000|Zhuang|2|1.4
+|China|1|1277558000|Mantu|3|0.9
+|China|1|1277558000|Hui|4|0.8
+|China|1|1277558000|Miao|5|0.7
+|China|1|1277558000|Uighur|6|0.6
+|China|1|1277558000|Yi|7|0.6
+|China|1|1277558000|Tujia|8|0.5
+|China|1|1277558000|Tibetan|9|0.4
+|China|1|1277558000|Mongolian|10|0.4
+|China|1|1277558000|Puyi|11|0.2
+|China|1|1277558000|Dong|12|0.2
+|India|2|1013662000|Hindi|1|39.9
+|India|2|1013662000|Bengali|2|8.2
+|===

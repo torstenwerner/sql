@@ -68,7 +68,7 @@ FROM (SELECT *
       FROM country
       LIMIT 10) c;
 
--- first 10 countries as JSON with 2 fields: country name and languages which is an array of json objects
+-- first 2 countries as JSON with 2 fields: country name and languages which is an array of json objects
 SELECT json_agg(cs)
 FROM
   (SELECT
@@ -78,8 +78,8 @@ FROM
        FROM countrylanguage cl
        WHERE cl.countrycode = c.code
      ) AS languages
-   FROM country c) cs
-LIMIT 10;
+   FROM country c
+   LIMIT 2) cs;
 
 -- calculate the percentage of each language in the world; format percentage like 0.123456; sort by percentage descending
 SELECT

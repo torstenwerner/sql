@@ -213,3 +213,21 @@ Tasks:
 |India|2|1013662000|Hindi|1|39.9
 |India|2|1013662000|Bengali|2|8.2
 |===
+
+=== Java
+
+The same tasks as in the SQL part should be solved with Java code.
+
+You can read the full content of each table with the methods from interface WorldRepository.
+The junit test RepositoryTest shows how to do that.
+Please write your solution as junit tests as well.
+
+As in the sql part every task should be solved twice.
+Try to find a solution first and feel free to use spaghetti code, explicit loops, and whatever you need.
+Try to find a better, more functional solution using the Java 8 streams API in the 2 step.
+
+1. In the first task you should become familar with the java exercise.
+ Execute the RepositoryTest.
+ Start with writing a unit test that reads one table, implements some filtering and/or pagination, and output the results.
+
+All the other tasks are the same as in the sql exercise.

@@ -228,12 +228,12 @@ public class Solutions {
         final long worldPopulation = worldRepository.findAllCountries().stream()
                 .mapToLong(Country::getPopulation)
                 .sum();
-        final AtomicInteger rank = new AtomicInteger();
         worldRepository.findAllLanguages().stream()
                 .collect(groupingBy(Language::getLanguage, summingDouble(this::getSpeakers)))
                 .entrySet().stream()
                 .sorted(comparing(Map.Entry::getValue, reverseOrder()))
-                .map(entry -> format("%3d %-20s %.6f\n", rank.incrementAndGet(), entry.getKey(), entry.getValue() / worldPopulation))
+                .map(new IndexAdder<>())
+                .map(entry -> format("%3d %-20s %.6f\n", entry.index() + 1, entry.get().getKey(), entry.get().getValue() / worldPopulation))
                 .limit(10)
                 .forEach(System.out::print);
     }

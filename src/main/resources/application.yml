@@ -3,4 +3,7 @@ spring.datasource:
     username: postgres
     password:
 
-logging.level: INFO
+logging:
+  pattern:
+    console: "%m%n"
+  level: INFO

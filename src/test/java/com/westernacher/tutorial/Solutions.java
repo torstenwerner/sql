@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.westernacher.tutorial.IndexAdder.WithIndex;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,11 +17,11 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static java.lang.Boolean.FALSE;
 import static java.lang.String.format;
-import static java.util.Comparator.comparing;
-import static java.util.Comparator.reverseOrder;
+import static java.util.Comparator.*;
 import static java.util.stream.Collectors.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
@@ -233,7 +234,8 @@ public class Solutions {
                 .entrySet().stream()
                 .sorted(comparing(Map.Entry::getValue, reverseOrder()))
                 .map(new IndexAdder<>())
-                .map(entry -> format("%3d %-20s %.6f\n", entry.index() + 1, entry.get().getKey(), entry.get().getValue() / worldPopulation))
+                .map(entry -> format("%3d %-20s %.6f\n",
+                        entry.index() + 1, entry.get().getKey(), entry.get().getValue() / worldPopulation))
                 .limit(10)
                 .forEach(System.out::print);
     }
@@ -243,12 +245,63 @@ public class Solutions {
     }
 
     @Test
-    public void countriesByPopulation() throws Exception {
+    public void countriesByPopulationWithRank() throws Exception {
         final AtomicInteger rank = new AtomicInteger();
         worldRepository.findAllCountries().stream()
-                .sorted(comparing(Country::getPopulation, reverseOrder()))
-                .map(country -> format("%-20s %10d\n", country.getName(), country.getPopulation()))
+                .sorted(comparing(Country::getPopulation).reversed())
+                .map(new IndexAdder<>())
+                .map(country -> format("%3d %-20s %10d\n",
+                        country.index() + 1, country.get().getName(), country.get().getPopulation()))
                 .limit(10)
                 .forEach(System.out::print);
+    }
+
+    @Test
+    public void languagesByPercentageGroupedByCountry() throws Exception {
+        worldRepository.findAllLanguages().stream()
+                .collect(groupingBy(Language::getCountrycode, collectingAndThen(toList(), this::toSortedIndexedStream)))
+                .values().stream()
+                .flatMap(Function.identity())
+                .map(lang -> format("%3s %30s %3d %5.1f\n",
+                        lang.get().getCountrycode(), lang.get().getLanguage(), lang.index() + 1, lang.get().getPercentage()))
+                .limit(30)
+                .forEach(System.out::print);
+    }
+
+    @Test
+    public void combinedExercise() throws Exception {
+        final Map<String, Stream<WithIndex<Language>>> languages = worldRepository.findAllLanguages().stream()
+                .collect(groupingBy(Language::getCountrycode, collectingAndThen(toList(), this::toSortedIndexedStream)));
+
+        class ResultRow {
+            final String code;
+            final int countryIndex;
+
+            public ResultRow(String code, int countryIndex) {
+                this.code = code;
+                this.countryIndex = countryIndex;
+            }
+
+            Stream<String> format() {
+                return languages.get(code)
+                        .map(language -> String.format("%3d %20s %10d %3d %10s %5.1f\n",
+                                countryIndex + 1, countries.get(code).getName(), countries.get(code).getPopulation(),
+                                language.index() + 1, language.get().getLanguage(), language.get().getPercentage()));
+            }
+        }
+
+        worldRepository.findAllCountries().stream()
+                .sorted(comparingLong(Country::getPopulation).reversed())
+                .map(new IndexAdder<>())
+                .map(country -> new ResultRow(country.get().getCode(), country.index()))
+                .flatMap(ResultRow::format)
+                .limit(30)
+                .forEach(System.out::print);
+    }
+
+    private Stream<WithIndex<Language>> toSortedIndexedStream(List<Language> languages) {
+        return languages.stream()
+                .sorted(comparing(Language::getPercentage, reverseOrder()))
+                .map(new IndexAdder<>());
     }
 }

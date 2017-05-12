@@ -241,4 +241,14 @@ public class Solutions {
     private double getSpeakers(Language language) {
         return .01 * language.getPercentage() * countries.get(language.getCountrycode()).getPopulation();
     }
+
+    @Test
+    public void countriesByPopulation() throws Exception {
+        final AtomicInteger rank = new AtomicInteger();
+        worldRepository.findAllCountries().stream()
+                .sorted(comparing(Country::getPopulation, reverseOrder()))
+                .map(country -> format("%-20s %10d\n", country.getName(), country.getPopulation()))
+                .limit(10)
+                .forEach(System.out::print);
+    }
 }

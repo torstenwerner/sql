@@ -17,6 +17,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static java.lang.Boolean.FALSE;
+import static java.lang.String.format;
 import static java.util.Comparator.comparing;
 import static java.util.Comparator.reverseOrder;
 import static java.util.stream.Collectors.*;
@@ -90,7 +91,7 @@ public class Solutions {
         worldRepository.findAllLanguages().stream()
                 .collect(Collectors.toMap(
                         Language::getLanguage,
-                        language -> language.getPercentage() * countries.get(language.getCountrycode()).getPopulation(),
+                        this::getSpeakers,
                         (sum, value) -> sum + value,
                         TreeMap::new
                 ))
@@ -162,7 +163,7 @@ public class Solutions {
                 .collect(groupingBy(City::getCountrycode, counting()))
                 .entrySet().stream()
                 .sorted(comparing(Map.Entry::getValue, reverseOrder()))
-                .map(entry -> String.format("%-20s %3d\n", countries.get(entry.getKey()).getName(), entry.getValue()))
+                .map(entry -> format("%-20s %3d\n", countries.get(entry.getKey()).getName(), entry.getValue()))
                 .limit(10)
                 .forEach(System.out::print);
     }
@@ -205,5 +206,23 @@ public class Solutions {
         } catch (JsonProcessingException e) {
             throw new RuntimeException("json serialization failed", e);
         }
+    }
+
+    @Test
+    public void languagePercentages() throws Exception {
+        final long worldPopulation = worldRepository.findAllCountries().stream()
+                .mapToLong(Country::getPopulation)
+                .sum();
+        worldRepository.findAllLanguages().stream()
+                .collect(groupingBy(Language::getLanguage, reducing(0., this::getSpeakers, Double::sum)))
+                .entrySet().stream()
+                .sorted(comparing(Map.Entry::getValue, reverseOrder()))
+                .map(entry -> format("%-20s %.6f\n", entry.getKey(), entry.getValue() / worldPopulation))
+                .limit(10)
+                .forEach(System.out::print);
+    }
+
+    private double getSpeakers(Language language) {
+        return .01 * language.getPercentage() * countries.get(language.getCountrycode()).getPopulation();
     }
 }

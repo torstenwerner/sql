@@ -1,9 +1,13 @@
 package com.westernacher.tutorial;
 
-import java.util.Map;
 import java.util.function.Function;
 
-public class IndexAdder<DelegateType>  implements Function<DelegateType, IndexAdder.WithIndex<DelegateType>> {
+/**
+ * Wraps an object and adds an index. This class in not thread safe.
+ *
+ * @param <DelegateType> type of the class to be wrapped
+ */
+public class IndexAdder<DelegateType> implements Function<DelegateType, IndexAdder.WithIndex<DelegateType>> {
 
     private int currentIndex = 0;
 

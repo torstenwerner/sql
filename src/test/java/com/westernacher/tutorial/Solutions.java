@@ -12,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -214,10 +215,25 @@ public class Solutions {
                 .mapToLong(Country::getPopulation)
                 .sum();
         worldRepository.findAllLanguages().stream()
-                .collect(groupingBy(Language::getLanguage, reducing(0., this::getSpeakers, Double::sum)))
+                .collect(groupingBy(Language::getLanguage, summingDouble(this::getSpeakers)))
                 .entrySet().stream()
                 .sorted(comparing(Map.Entry::getValue, reverseOrder()))
                 .map(entry -> format("%-20s %.6f\n", entry.getKey(), entry.getValue() / worldPopulation))
+                .limit(10)
+                .forEach(System.out::print);
+    }
+
+    @Test
+    public void languagePercentagesWithRank() throws Exception {
+        final long worldPopulation = worldRepository.findAllCountries().stream()
+                .mapToLong(Country::getPopulation)
+                .sum();
+        final AtomicInteger rank = new AtomicInteger();
+        worldRepository.findAllLanguages().stream()
+                .collect(groupingBy(Language::getLanguage, summingDouble(this::getSpeakers)))
+                .entrySet().stream()
+                .sorted(comparing(Map.Entry::getValue, reverseOrder()))
+                .map(entry -> format("%3d %-20s %.6f\n", rank.incrementAndGet(), entry.getKey(), entry.getValue() / worldPopulation))
                 .limit(10)
                 .forEach(System.out::print);
     }

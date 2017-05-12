@@ -14,7 +14,8 @@ import java.util.stream.Collectors;
 
 import static java.lang.Boolean.FALSE;
 import static java.util.Comparator.comparing;
-import static java.util.stream.Collectors.toMap;
+import static java.util.Comparator.reverseOrder;
+import static java.util.stream.Collectors.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
@@ -149,5 +150,16 @@ public class Solutions {
             final long aboveMedian = sortedCountries.get(size / 2).getPopulation();
             return 0.5 * (belowMedian + aboveMedian);
         }
+    }
+
+    @Test
+    public void cities() throws Exception {
+        worldRepository.findAllCities().stream()
+                .collect(groupingBy(City::getCountrycode, counting()))
+                .entrySet().stream()
+                .sorted(comparing(Map.Entry::getValue, reverseOrder()))
+                .map(entry -> String.format("%-20s %3d\n", countries.get(entry.getKey()).getName(), entry.getValue()))
+                .limit(10)
+                .forEach(System.out::print);
     }
 }

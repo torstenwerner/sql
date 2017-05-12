@@ -37,4 +37,14 @@ public class RepositoryTest {
         assertThat(pashto.getLanguage(), is("Pashto"));
         assertThat(pashto.getPercentage(), closeTo(52.4, 1e-5));
     }
+
+    @Test
+    public void cities() throws Exception {
+        final List<City> allCities = worldRepository.findAllCities();
+        assertThat(allCities, hasSize(4079));
+        final City kabul = allCities.get(0);
+        assertThat(kabul.getId(), is(1));
+        assertThat(kabul.getName(), is("Kabul"));
+        assertThat(kabul.getCountrycode(), is("AFG"));
+    }
 }

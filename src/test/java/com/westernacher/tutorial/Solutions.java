@@ -1,5 +1,7 @@
 package com.westernacher.tutorial;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -161,5 +163,22 @@ public class Solutions {
                 .map(entry -> String.format("%-20s %3d\n", countries.get(entry.getKey()).getName(), entry.getValue()))
                 .limit(10)
                 .forEach(System.out::print);
+    }
+
+    @Test
+    public void jsonCountries() throws Exception {
+        final List<Country> countries = worldRepository.findAllCountries().stream()
+                .limit(10)
+                .collect(toList());
+        System.out.println(toJsonString(countries));
+    }
+
+    private <T> String toJsonString(T object) {
+        final ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            return objectMapper.writeValueAsString(object);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException("json serialization failed", e);
+        }
     }
 }

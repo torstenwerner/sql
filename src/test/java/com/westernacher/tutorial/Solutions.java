@@ -13,6 +13,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static java.lang.Boolean.FALSE;
+import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.toMap;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
@@ -109,5 +110,44 @@ public class Solutions {
                 .map(countries::get)
                 .map(Country::getName)
                 .forEach(name -> System.out.printf("%s\n", name));
+    }
+
+    @Test
+    public void variousAggregates() throws Exception {
+        final LongSummaryStatistics statistics = countries.values().stream()
+                .mapToLong(Country::getPopulation)
+                .summaryStatistics();
+        final long sum = statistics.getSum();
+        final double average = statistics.getAverage();
+        final long max = statistics.getMax();
+        final double median = calculateMedian(countries.values());
+        final long sumEurope = countries.values().stream()
+                .filter(country -> "Europe".equals(country.getContinent()))
+                .mapToLong(Country::getPopulation)
+                .sum();
+        final long sumBelowMedian = countries.values().stream()
+                .mapToLong(Country::getPopulation)
+                .filter(population -> population < median)
+                .sum();
+        System.out.printf("sum: %d\n", sum);
+        System.out.printf("average: %.0f\n", average);
+        System.out.printf("max: %d\n", max);
+        System.out.printf("median: %.0f\n", median);
+        System.out.printf("sum europe: %d\n", sumEurope);
+        System.out.printf("sum below median: %d\n", sumBelowMedian);
+    }
+
+    private double calculateMedian(Collection<Country> values) {
+        final List<Country> sortedCountries = new ArrayList<>(values);
+        sortedCountries.sort(comparing(Country::getPopulation));
+        final int size = sortedCountries.size();
+
+        if (size % 2 == 1) {
+            return sortedCountries.get((size - 1) / 2).getPopulation();
+        } else {
+            final long belowMedian = sortedCountries.get(size / 2 - 1).getPopulation();
+            final long aboveMedian = sortedCountries.get(size / 2).getPopulation();
+            return 0.5 * (belowMedian + aboveMedian);
+        }
     }
 }

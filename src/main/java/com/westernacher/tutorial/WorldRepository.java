@@ -9,7 +9,7 @@ import java.util.List;
 @Mapper
 @Repository
 public interface WorldRepository {
-    @Select("SELECT code, name, population FROM country")
+    @Select("SELECT code, name, population, continent FROM country")
     List<Country> findAllCountries();
 
     @Select("SELECT countrycode, language, isofficial, percentage FROM countrylanguage")

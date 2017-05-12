@@ -1,5 +1,7 @@
 package com.westernacher.tutorial;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
@@ -173,8 +175,31 @@ public class Solutions {
         System.out.println(toJsonString(countries));
     }
 
+    @Test
+    public void jsonCountryLanguages() throws Exception {
+        class ResultRow {
+            String name;
+            List<Language> languages;
+
+            ResultRow(Country country, List<Language> languages) {
+                this.name = country.getName();
+                this.languages = languages;
+            }
+        }
+
+        final Map<String, List<Language>> languageMap = worldRepository.findAllLanguages().stream()
+                .collect(groupingBy(Language::getCountrycode));
+
+        final List<ResultRow> countries = worldRepository.findAllCountries().stream()
+                .limit(2)
+                .map(country -> new ResultRow(country, languageMap.get(country.getCode())))
+                .collect(toList());
+        System.out.println(toJsonString(countries));
+    }
+
     private <T> String toJsonString(T object) {
         final ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.setVisibility(PropertyAccessor.FIELD, Visibility.ANY);
         try {
             return objectMapper.writeValueAsString(object);
         } catch (JsonProcessingException e) {

@@ -224,7 +224,7 @@ Please write your solution as junit tests as well.
 
 As in the sql part every task should be solved twice.
 Try to find a solution first and feel free to use imperative code, explicit loops, and whatever you need.
-Try to find a better, more functional solution using the Java 8 streams API in the 2 step.
+Try to find a better, more functional solution using the Java 8 streams API in the 2nd step.
 Cheat sheet: https://zeroturnaround.com/rebellabs/java-8-streams-cheat-sheet/
 
 1. In the first task you should become familar with the java exercise.

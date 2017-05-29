@@ -40,3 +40,5 @@ wrapper {
 task queryDsl(type: QueryDslTask)
 
 sourceSets.main.java.srcDir queryDsl.destDir
+
+task asciidoctor(type: AsciidoctorTask)

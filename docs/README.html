@@ -431,13 +431,13 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p>install docker → <a href="https://www.docker.com/">https://www.docker.com/</a> → Get Docker → For Desktops</p>
 </li>
 <li>
-<p><code>docker run -d –name postgres -p 5432:5432 postgres:alpine</code></p>
+<p><code>docker run -d --name postgres -p 5432:5432 postgres:alpine</code></p>
 </li>
 <li>
-<p><code>echo 'create database sen;' | docker run -i –rm –link postgres:postgres postgres:alpine psql -h postgres -U postgres postgres</code></p>
+<p><code>echo 'create database sen;' | docker run -i --rm --link postgres:postgres postgres:alpine psql -h postgres -U postgres postgres</code></p>
 </li>
 <li>
-<p><code>docker run -i –rm –link postgres:postgres postgres:alpine psql -h postgres -U postgres sen &lt; world/world.sql</code></p>
+<p><code>docker run -i --rm --link postgres:postgres postgres:alpine psql -h postgres -U postgres sen &lt; world/world.sql</code></p>
 </li>
 </ul>
 </div>
@@ -1065,7 +1065,7 @@ Do not modify or extend the sql queries any more because this is the java exerci
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-05-29 10:04:22 CEST
+Last updated 2017-05-29 10:27:16 CEST
 </div>
 </div>
 </body>

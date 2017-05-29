@@ -15,6 +15,7 @@ Stop and start without losing data:
 == Checklist
 
 everybody…
+
 - got docker installed
 - got postgresql set up
 - got database tool configured and could execute the sample query

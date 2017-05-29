@@ -160,7 +160,7 @@ public class Country {
 
     @Override
     public String toString() {
-        return "capital = " + capital + ", code = " + code + ", code2 = " + code2 + ", continent = " + continent + ", gnp = " + gnp + ", gnpold = " + gnpold + ", governmentform = " + governmentform + ", headofstate = " + headofstate + ", indepyear = " + indepyear + ", lifeexpectancy = " + lifeexpectancy + ", localname = " + localname + ", name = " + name + ", population = " + population + ", region = " + region + ", surfacearea = " + surfacearea;
+         return "capital = " + capital + ", code = " + code + ", code2 = " + code2 + ", continent = " + continent + ", gnp = " + gnp + ", gnpold = " + gnpold + ", governmentform = " + governmentform + ", headofstate = " + headofstate + ", indepyear = " + indepyear + ", lifeexpectancy = " + lifeexpectancy + ", localname = " + localname + ", name = " + name + ", population = " + population + ", region = " + region + ", surfacearea = " + surfacearea;
     }
 
 }

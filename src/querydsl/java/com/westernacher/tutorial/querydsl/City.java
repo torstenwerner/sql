@@ -60,7 +60,7 @@ public class City {
 
     @Override
     public String toString() {
-        return "countrycode = " + countrycode + ", district = " + district + ", id = " + id + ", name = " + name + ", population = " + population;
+         return "countrycode = " + countrycode + ", district = " + district + ", id = " + id + ", name = " + name + ", population = " + population;
     }
 
 }

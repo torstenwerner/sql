@@ -13,6 +13,8 @@ import java.sql.Types;
 import static com.querydsl.core.types.PathMetadataFactory.forVariable;
 
 
+
+
 /**
  * QCountrylanguage is a Querydsl query type for Countrylanguage
  */

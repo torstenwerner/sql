@@ -12,6 +12,8 @@ import java.sql.Types;
 import static com.querydsl.core.types.PathMetadataFactory.forVariable;
 
 
+
+
 /**
  * QCity is a Querydsl query type for City
  */
